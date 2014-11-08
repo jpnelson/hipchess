@@ -3,10 +3,12 @@ import sqlite3
 import requests
 import base64
 
-from bottle import route, post, delete, run, request
+from bottle import route, post, get, run, request
 from bottle import static_file
 
 import json
+from PIL import Image, ImageDraw
+
 
 BASE_URL = 'http://32d0ef22.ngrok.com/'
 
@@ -37,6 +39,23 @@ def install():
 
     db.commit()
 
+@get('/game/<room_id>.png')
+def render_game(room_id):
+    size = (100,50)             # size of the image to create
+    im = Image.new('RGB', size) # create the image
+    draw = ImageDraw.Draw(im)   # create a drawing object that is
+    # used to draw on the new image
+    red = (255,0,0)    # color of our text
+    text_pos = (10,10) # top-left position of our text
+    text = "Hello World!" # text to draw
+    # Now, we'll do the drawing:
+    draw.text(text_pos, text, fill=red)
+
+    image_path = 'dynamic-images/' + room_id + '.png'
+    print 'Saving to ' + image_path
+    im.save(image_path, 'PNG')
+
+    return static_file(image_path, root='.')
 
 def authorize(oauth_id, oauth_secret):
     oauth_params = {
@@ -68,7 +87,7 @@ def send_message(message, room_id):
     token = authorize_by_room(room_id)
     print 'Token : ' + str(token)
     message_params = {
-        'message': message,
+        'message': '<img src="' + BASE_URL + 'game/' + room_id + '.png"></img>',
         'message_format': 'html',
         'color': 'green'
     }
