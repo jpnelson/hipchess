@@ -1,0 +1,31 @@
+{
+    "name": "Hipchess",
+    "description": "Hipchat chess bot",
+    "key": "au.com.joshnelson.hipchess",
+    "links": {
+        "homepage": "https://joshnelson.com.au",
+        "self": "http://32d0ef22.ngrok.com/static/config.json"
+    },
+    "baseUrl": "http://32d0ef22.ngrok.com/",
+    "authentication": {
+        "type": "jwt"
+    },
+    "capabilities": {
+        "hipchatApiConsumer": {
+            "scopes": [
+                "send_notification",
+                "send_message",
+                "admin_room"
+            ]
+        },
+        "installable": {
+            "callbackUrl": "http://32d0ef22.ngrok.com/installable"
+        },
+        "webhook": [{
+            "url": "http://32d0ef22.ngrok.com/message",
+            "pattern": "/chess .*",
+            "event": "room_message",
+            "name": "Chess bot command"
+        }]
+    }
+}
