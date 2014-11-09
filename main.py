@@ -4,6 +4,7 @@ import requests
 import base64
 import json
 import re
+import time
 
 from bottle import route, post, get, run, request
 from bottle import static_file
@@ -27,7 +28,6 @@ def server_static(filename):
 @post('/message')
 def room():
     request_body = json.loads(request.body.read())
-    print request_body
 
     user_name = request_body['item']['message']['from']['name']
     user_message = request_body['item']['message']['message']
@@ -59,6 +59,7 @@ def room():
                 '<li><code>/chess help</code>: This command</li>' +
                 '<li><code>/chess move a1 to h7</code>: Move the piece at a1 to h7</li>' +
                 '<li><code>/chess restart</code>: Restart the game</li>' +
+                '<li><code>/chess view</code>: View the current state of the game</li>' +
             '</ul>' +
             'Repository URL: <a href="https://github.com/cyberdash/hipchess">https://github.com/cyberdash/hipchess</a>'
         , room_id)
@@ -93,7 +94,7 @@ def render_game(room_id):
 def send_message(message, room_id):
 
     token = authorize_by_room(room_id)
-    print 'Token : ' + str(token)
+    print 'Sending message with token: ' + str(token)
     message_params = {
         'message': message,
         'message_format': 'html',
@@ -105,7 +106,13 @@ def send_message(message, room_id):
         json=message_params
     )
 
+token_cache = {}
+
 def authorize(oauth_id, oauth_secret):
+
+    if (oauth_id in token_cache) and token_cache[oauth_id]['expiry'] < time.time():
+        return token_cache[oauth_id]['access_token']
+
     oauth_params = {
         'grant_type': 'client_credentials',
         'scope': 'admin_room send_notification'
@@ -120,9 +127,15 @@ def authorize(oauth_id, oauth_secret):
         params=oauth_params,
         headers=oauth_headers
     )
-    print webhook_oauth_request.json()
+    access_token = webhook_oauth_request.json()['access_token']
+    expires_in = webhook_oauth_request.json()['expires_in']
 
-    return webhook_oauth_request.json()['access_token']
+    token_cache[oauth_id] = {
+        'expiry': time.time() + expires_in,
+        'access_token': access_token
+    }
+
+    return access_token
 
 
 def authorize_by_room(room_id):
