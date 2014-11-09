@@ -4,9 +4,9 @@
     "key": "au.com.joshnelson.hipchess",
     "links": {
         "homepage": "https://joshnelson.com.au",
-        "self": "http://32d0ef22.ngrok.com/static/config.json"
+        "self": "http://joshnelson.com.au:5000/static/config.json"
     },
-    "baseUrl": "http://32d0ef22.ngrok.com/",
+    "baseUrl": "http://joshnelson.com.au:5000/",
     "authentication": {
         "type": "jwt"
     },
@@ -19,10 +19,10 @@
             ]
         },
         "installable": {
-            "callbackUrl": "http://32d0ef22.ngrok.com/installable"
+            "callbackUrl": "http://joshnelson.com.au:5000/installable"
         },
         "webhook": [{
-            "url": "http://32d0ef22.ngrok.com/message",
+            "url": "http://joshnelson.com.au:5000/message",
             "pattern": "/chess .*",
             "event": "room_message",
             "name": "Chess bot command"
