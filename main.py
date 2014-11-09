@@ -12,7 +12,7 @@ from bottle import static_file
 from view import render
 from model import ChessGame, InvalidMove
 
-BASE_URL = 'http://32d0ef22.ngrok.com/'
+BASE_URL = 'http://joshnelson.com.au/'
 
 MOVE_COMMAND = '/chess move'
 RESTART_COMMAND = '/chess restart'
@@ -142,4 +142,4 @@ def authorize_by_room(room_id):
     (_, oauth_id, oauth_secret) = db.execute('SELECT * FROM rooms WHERE room = ?', (room_id,)).fetchone()
     return authorize(oauth_id, oauth_secret)
 
-run(host='localhost', port=5000)
+run(host='0.0.0.0', port=5000)
