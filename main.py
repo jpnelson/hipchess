@@ -56,11 +56,11 @@ def room():
     elif user_message.startswith(HELP_COMMAND):
         send_message(
             '<ul>' +
-                '<li><pre>/chess help</pre>: This command</li>' +
-                '<li><pre>/chess move a1 to h7</pre>: Move the piece at a1 to h7</li>' +
-                '<li><pre>/chess restart</pre>: Restart the game</li>' +
+                '<li><code>/chess help</code>: This command</li>' +
+                '<li><code>/chess move a1 to h7</code>: Move the piece at a1 to h7</li>' +
+                '<li><code>/chess restart</code>: Restart the game</li>' +
             '</ul>' +
-            'Repository URL: https://github.com/cyberdash/hipchess'
+            'Repository URL: <a href="https://github.com/cyberdash/hipchess">https://github.com/cyberdash/hipchess</a>'
         , room_id)
 
 def send_board_image(room_id):
