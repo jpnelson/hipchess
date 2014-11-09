@@ -142,4 +142,4 @@ def authorize_by_room(room_id):
     (_, oauth_id, oauth_secret) = db.execute('SELECT * FROM rooms WHERE room = ?', (room_id,)).fetchone()
     return authorize(oauth_id, oauth_secret)
 
-run(host='0.0.0.0', port=6000)
+run(host='0.0.0.0', port=4321)
