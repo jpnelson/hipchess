@@ -12,7 +12,7 @@ from bottle import static_file
 from view import render
 from model import ChessGame, InvalidMove
 
-BASE_URL = 'http://32d0ef22.ngrok.com/'
+BASE_URL = 'http://joshnelson.com.au:4321/'
 
 MOVE_COMMAND = '/chess move'
 RESTART_COMMAND = '/chess restart'
@@ -127,7 +127,8 @@ def authorize(oauth_id, oauth_secret):
         params=oauth_params,
         headers=oauth_headers
     )
-
+    print oauth_id
+    print oauth_secret
     print webhook_oauth_request.json()
 
     access_token = webhook_oauth_request.json()['access_token']
