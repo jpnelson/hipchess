@@ -6,7 +6,7 @@
         "homepage": "https://joshnelson.com.au",
         "self": "http://joshnelson.com.au:4321/static/config.json"
     },
-    "baseUrl": "http://32d0ef22.ngrok.com",
+    "baseUrl": "http://joshnelson.com.au",
     "authentication": {
         "type": "jwt"
     },
