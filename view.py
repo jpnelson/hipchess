@@ -20,9 +20,9 @@ def render(game, path):
         for x in range(0, 8):
             draw.text((x * CELL_SIZE + CELL_SIZE/2, BOARD_SIZE + BOARD_PADDING), chr(x + 97), (0, 0, 0))
 
-            background_color = (255, 255, 255)
+            background_color = (123, 123, 123)
             if (x + y * 7) % 2 == 0:
-                background_color = (123, 123, 123)
+                background_color = (255, 255, 255)
 
             if game.last_move[0] == (x, y) or game.last_move[1] == (x, y):
                 (bg_r, bg_g, bg_b) = background_color
